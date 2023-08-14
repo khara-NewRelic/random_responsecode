@@ -8,12 +8,14 @@ function getRandomVal(max){
     return Math.floor(Math.random()*max);
 }
 
+//node.jsで用いるテンプレートエンジンにejsを用いることを指定する
+app.set('view engine', 'ejs');
 
 app.get("/", (req, res) => {
 
     let retStatusIndex = getRandomVal(100);
     if( retStatusIndex < 70 ){
-        res.send("New Relic!");
+        res.render("index");
     }else if( retStatusIndex <= 90){
         res.status(404).send("Not Found");
     }else{
