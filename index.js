@@ -14,8 +14,10 @@ app.get("/", (req, res) => {
     let retStatusIndex = getRandomVal(100);
     if( retStatusIndex < 70 ){
         res.send("New Relic!");
+    }else if( retStatusIndex <= 90){
+        res.status(404).send("Not Found");
     }else{
-        res.status(404).send("Hoge..");
+        res.status(503).send("Service Unavailable")
     }
 })
 .listen(port, () => {
