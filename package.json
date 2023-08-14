@@ -9,6 +9,7 @@
   "author": "khara-NewRelic",
   "license": "ISC",
   "dependencies": {
+    "crypto": "^1.0.1",
     "express": "^4.18.2"
   }
 }
