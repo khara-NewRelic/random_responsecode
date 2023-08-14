@@ -17,9 +17,9 @@ app.get("/", (req, res) => {
     if( retStatusIndex < 70 ){
         res.render("index");
     }else if( retStatusIndex <= 90){
-        res.status(404).send("Not Found");
+        res.status(404).render("404_notfound");
     }else{
-        res.status(503).send("Service Unavailable")
+        res.status(503).render("503_serviceunavailable");
     }
 })
 .listen(port, () => {
