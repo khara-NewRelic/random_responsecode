@@ -116,3 +116,31 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
 
+---
+# 補足: Node APM Agentの導入
+New Relicポータルにて表示されるコマンド(on host)に従って作業を行うことを前提とする。
+### Node.jsの最新バージョンにアップデートする
+古いNode.jsを利用している場合、newrelic.jsを含めたアプリケーションの起動時に`promise`が含まれていないとう旨のエラーメッセージが出る
+その様な場合、以下を実行し、最新版のNode.jsを適用すると良い
+```
+sudo npm install -g
+sudo n latest
+```
+
+### newrelic.jsの導入
+アプリケーションが配置されているパスを`/src`と仮定しています。(/srcが対象Nodeアプリのルートと想定しています。)
+```
+cd /src
+sudo npm install newrelic --save
+sudo cp ./node_modules/newrelic/newrelic.js
+sudo vi newrelic.js
+```
+newrelic.js内に'app_name'と'license_key'の変数が記載されているため、値を適切なものに更新する
+補足1) 'license_key'は、INGEST_LICENSEキーの値を設定すること
+補足2) New RelicポータルのAdd Dataの画面に従って作業を進めると、更新する具体的な値が表示されています
+
+上記の設定ファイルを保存し、nodeに'-r newrelic'オプションを追加して、アプリケーションを起動します。
+**起動例**
+```
+sudo nohup node -r newrelic index.js &
+```
