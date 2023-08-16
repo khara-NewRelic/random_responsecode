@@ -14,6 +14,7 @@
 参考サイトは[こちら](https://ubuntu.com/tutorials/install-and-configure-nginx#2-installing-nginx)
 
 `sudo apt update`
+
 `sudo apt install nginx`
 
 補足) 動作確認として
