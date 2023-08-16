@@ -1,13 +1,6 @@
-
-導入手順:
-- このレポジトリをダウンロード
-- ダウンロードしたレポジトリのディレクトリに移動する
-- node.jsにindex.jsを起動させる ( コマンド例: % node index.js )
-- ブラウザなどで、3000(/tcp)にアクセスし、レスポンスコードがランダムに変更されることを確認する
-
-
 # はじめに:
 このドキュメントは、ubuntuサーバにNGINXとNode.jsを導入し、本レポジトリのindex.jsを適用する手順を簡単にまとめたものです。Linuxでのコマンドを触ったことがある人を想定していますが・・・が、大したことは記載していないです。
+
 ---
 # 環境のゆるい前提:
  - 既にubuntuサーバを確保してる
@@ -39,6 +32,7 @@
 'sudo ln -s /snap/bin/certbot /usr/bin/certbot'
 ### Get cert and update nginx configuration
 'sudo certbot --nginx'
+
 途中でドメイン名を聞かれる。これはFQDNを回答すれば良い
 ### [Test] test automatic renewal
 'sudo certbot renew --dry-run'
@@ -56,6 +50,7 @@
 'sudo git clone https://github.com/khara-NewRelic/random_responsecode.git'
 'cd random_responsecode'
 'sudo nohup node index.js &'
+
 補足) 'curl http://localhost:3000'
 を複数回実行し、さまざまなステータスのコンテンツが返ってくるかを確認すると良い
 
@@ -63,12 +58,14 @@
 参考情報は[こちら](https://blog.logrocket.com/how-to-run-a-node-js-server-with-nginx/)
 'cd /etc/nginx/sites-available'
 'sudo vi default'
+
 *Before:* https用のserverディレクティブ内に以下の記載があるので、
 'location / {
         # First attempt to serve request as file, then
         # as directory, then fall back to displaying a 404.
         try_files $uri $uri/ =404;
     }'
+
 *After:* 以下の内容にアップデートする
 'error_page 404 /404.html;
         location = /404.html {
@@ -81,6 +78,7 @@
                 proxy_set_header Host $host;
                 proxy_pass http://127.0.0.1:3000;
 	}'
+
 404.htmlは[こちら](https://github.com/khara-NewRelic/funny_error_page_404/blob/main/404.html)を参考に、/var/www/html/404.htmlを作成すること。
 ### NGINXでの設定ファイルの確認
 'sudo nginx -t'
