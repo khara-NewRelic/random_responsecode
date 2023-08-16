@@ -89,7 +89,7 @@ location / {
         # as directory, then fall back to displaying a 404.
         try_files $uri $uri/ =404;
     }
-    ```
+```
 
 **After:** 以下の内容にアップデートする
 ```
@@ -115,3 +115,4 @@ sudo nginx -t
 ```
 sudo systemctl restart nginx
 ```
+
